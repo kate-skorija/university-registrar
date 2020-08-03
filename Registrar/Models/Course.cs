@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Registrar
+namespace Registrar.Models
 {
   public class Course
   {
