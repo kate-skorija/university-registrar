@@ -28,5 +28,13 @@ namespace Registrar.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+    public ActionResult Details(int id)
+    {
+      var thisCourse = _db.Courses
+        .Include(course => course.Students)
+        .ThenInclude(join => join.Student)
+        .FirstOrDefault(course => course.CourseId == id);
+        return View(thisCourse);
+    } // next step is to create the Details view
   }
 }
