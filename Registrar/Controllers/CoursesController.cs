@@ -14,7 +14,19 @@ namespace Registrar.Controllers
     }
     public ActionResult Index()
     {
-      return View(_db.Courses.ToList());
+      return View(_db.Courses.ToList()); // this is 2 lines in the repo - possible issues?
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    public ActionResult Create(Course course)
+    {
+      _db.Courses.Add(course);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
   }
 }
