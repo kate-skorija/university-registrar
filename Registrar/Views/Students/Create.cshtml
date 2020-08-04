@@ -9,10 +9,10 @@
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.StudentName)
-  @Html.TextBoxFor(model => model.StudentName)
+  @Html.TextBoxFor(model => model.StudentName, new { required="required" })
 
   @Html.LabelFor(model => model.DateOfEnrollment)
-  @Html.TextBoxFor(model => model.DateOfEnrollment, new { @type="date" })
+  @Html.TextBoxFor(model => model.DateOfEnrollment, new { @type="date", required="required" })
 
   <input type="submit" value="Add a Student" />
 }

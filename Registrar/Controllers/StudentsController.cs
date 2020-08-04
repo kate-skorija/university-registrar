@@ -53,7 +53,7 @@ namespace Registrar.Controllers
       return View(thisStudent);
     }
     [HttpPost]
-    public ActionResult Edit(Student student, in CourseId)
+    public ActionResult Edit(Student student, int CourseId)
     {
       if (CourseId != 0)
       {

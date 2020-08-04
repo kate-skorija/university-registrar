@@ -22,6 +22,7 @@ namespace Registrar.Controllers
       return View();
     }
 
+    [HttpPost]
     public ActionResult Create(Course course)
     {
       _db.Courses.Add(course);

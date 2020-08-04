@@ -13,9 +13,9 @@ _Welcome administrators! Use this application to keep track of students and cour
 
 | Behavior   |   Input   |  Output |  Met? (Y/N)  |
 |----------|:-------------:|------:|-----------:|
-| Program should add a student to the database along with their date of enrollment | student: Tim, doe: Nov 12th 2020 | Table: Students, Column1: StudentId = 1, Column2: StudentName = Time, Column3: DateOfEnrollment = Nov 12th 2020 | N |
-| Program should add a course to the database along with a course number | course: Coding 101, number: CS101 | Table: Courses, Column1: CourseId = 1, Column2: CourseName = Coding 101, Column3: CourseNumber = CS101 | N |
-| Program should associate a student to a course | Tim, Coding101 | Table: CoursesStudents, Column 1: CoursesStudentsId = 1, Column2: StudentId = 1, Column3: CourseId = 1, Column 4: Course Object, Column 5: Student Object | N |
+| Program should add a student to the database along with their date of enrollment | student: Tim, doe: Nov 12th 2020 | Table: Students, Column1: StudentId = 1, Column2: StudentName = Time, Column3: DateOfEnrollment = Nov 12th 2020 | Y |
+| Program should add a course to the database along with a course number | course: Coding 101, number: CS101 | Table: Courses, Column1: CourseId = 1, Column2: CourseName = Coding 101, Column3: CourseNumber = CS101 | Y |
+| Program should associate a student to a course | Tim, Coding101 | Table: CoursesStudents, Column 1: CoursesStudentsId = 1, Column2: StudentId = 1, Column3: CourseId = 1, Column 4: Course Object, Column 5: Student Object | Y |
 
 
 ## Stretch Goals
@@ -45,6 +45,8 @@ _Welcome administrators! Use this application to keep track of students and cour
 
 #### Configure the MySQL Workbench Database:
 * Install MySQL and MySQL Workbench first. During installation of MySQL you will be asked to create a password. This is important! Take note of your password. Once you have installed MySQL and MySQL Workbenck, start MySQL by entering `mysql -uroot -p+_yourpassword_` in the terminal. Example: password is `tomato`, enter `mysql -uroot ptomato`. If this doesn't work in your terminal, try using your computer's command line interface application. If you are successful, you will see a message in the terminal, ending with the line `mysql>`. Once you have succesfully completed these steps, follow the instructions below.
+
+A) Create the Database in MySQL Workbench
 1. Open MySQL Workbench and double click on the grey box under the line `MySQL Connections` (this box should say `mamp` and have some text and numbers ending in `:3306`). This will launch the MySQL Workbench. You may be prompted to enter the same password that you used in the previous step (ex: `tomato`). 
 2. You should see an icon in the upper left that looks like a little piece of paper with the letters `SQL` and a + sign. Hover over the icon and confirm that this is the 'create a new SQL tab for executing queries' icon. Once confirmed, double click the icon.
 3. Enter the following (excluding the ``` at the beginning and end of the code) text into the window for the SQL File tab.
@@ -53,11 +55,22 @@ _Welcome administrators! Use this application to keep track of students and cour
 
 4. Click 'execute' (this may appear as a lightening bolt icon).
 
+**OR**
+
+B) Populate the Database from the VS Code terminal using Migrations
+1. Enter the following into the VS Code terminal `dotnet ef migrations add Initial` and hit Enter
+2. Now enter `dotnet ef dtabase update` and hit Enter
+
+
 ## Known Bugs
 
 | Bug : Message |  Situation  | Resolved (Y/N) |  How was the issue resolved?  |
 | ------- | ----- | ------ | ------- |
-
+| Controllers\StudentsController.cs(56,58): error CS1001: Identifier 
+expected [C:\Users\blindgren\Desktop\EPICODUS\Full Time Bootcamp\CS-and-NETCore\UniversityRegistrar.Solution\Registrar\Registrar.csproj] | Running `dotnet build` | Y | Missing `t` on line 56 of StudentsController.cs |
+| C:\Program Files\dotnet\sdk\2.2.203\Microsoft.Common.CurrentVersion.targets(4203,5): error MSB3021: Unable to copy file "obj\Debug\netcoreapp2.2\Registrar.dll" to "bin\Debug\netcoreapp2.2\Registrar.dll". The process cannot access the file 'C:\Users\blindgren\Desktop\EPICODUS\Full Time Bootcamp\CS-and-NETCore\UniversityRegistrar.Solution\Registrar\bin\Debug\netcoreapp2.2\Registrar.dll' because it is 
+being used by another process. [C:\Users\blindgren\Desktop\EPICODUS\Full Time Bootcamp\CS-and-NETCore\UniversityRegistrar.Solution\Registrar\Registrar.csproj] | Running `dotnet build` | N | Remove bin and obj directories, close VS Code and re-open, run `dotnet restore`, then run `dotnet build` |
+| AmbiguousActionException: Multiple actions matched. The following actions matched route data and had all constraints satisfied: Registrar.Controllers.CoursesController.Create (Registrar) | Click on the `Add a new course` link in the application | Y | Added missing ` [HttpPost]` to Create POST route in CourseController.cs |
 
 ## Support and contact details
 
