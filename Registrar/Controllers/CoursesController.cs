@@ -35,5 +35,19 @@ namespace Registrar.Controllers
         .ThenInclude(join => join.Student)
         .FirstOrDefault(course => course.CourseId == id);
         return View(thisCourse);
-    } 
+    }
+
+    public ActionResult Edit(int id){
+      var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+      return View(thisCourse);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Course course)
+    {
+      _db.Entry(course).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+  }
 }
