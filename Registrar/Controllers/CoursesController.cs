@@ -35,6 +35,5 @@ namespace Registrar.Controllers
         .ThenInclude(join => join.Student)
         .FirstOrDefault(course => course.CourseId == id);
         return View(thisCourse);
-    } // next step is to create the Details view
-  }
+    } 
 }
