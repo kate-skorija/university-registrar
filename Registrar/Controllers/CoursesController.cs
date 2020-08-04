@@ -2,6 +2,7 @@ using Registrar.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Registrar.Controllers
 {
@@ -20,14 +21,15 @@ namespace Registrar.Controllers
         var searched = model.AsQueryable().Where(course => course.CourseName.Contains(courseName)).ToList();
         if (searched.Count == 0)
         {
-          return View(model.ToList());
+          ViewBag.NoResult = "There are no courses that match your search results. Here is our full list of courses:";
+          return View(model.OrderBy(course => course.CourseName).ToList());
         }
         else
         {
-          return View(searched);
+          return View(searched.OrderBy(course => course.CourseName).ToList());
         }
       }
-      return View(model.ToList());
+      return View(model.OrderBy(course => course.CourseName).ToList());
     }
 
     public ActionResult Create()

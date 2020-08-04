@@ -12,6 +12,7 @@
     <p>Search Course: @Html.TextBox("courseName")</p>
     <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
   }      
+  @ViewBag.NoResult
 
 @if (@Model.Count == 0)
 {
