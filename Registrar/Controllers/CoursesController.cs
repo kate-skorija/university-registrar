@@ -12,9 +12,22 @@ namespace Registrar.Controllers
     {
       _db = db;
     }
-    public ActionResult Index()
+    public ActionResult Index(string courseName="")
     {
-      return View(_db.Courses.ToList()); // this is 2 lines in the repo - possible issues?
+      var model = _db.Courses;
+      if (!string.IsNullOrEmpty(courseName))
+      {
+        var searched = model.AsQueryable().Where(course => course.CourseName.Contains(courseName)).ToList();
+        if (searched.Count == 0)
+        {
+          return View(model.ToList());
+        }
+        else
+        {
+          return View(searched);
+        }
+      }
+      return View(model.ToList());
     }
 
     public ActionResult Create()
