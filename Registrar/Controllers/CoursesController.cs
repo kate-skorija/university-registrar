@@ -2,6 +2,7 @@ using Registrar.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Registrar.Controllers
 {
@@ -12,9 +13,23 @@ namespace Registrar.Controllers
     {
       _db = db;
     }
-    public ActionResult Index()
+    public ActionResult Index(string courseName="")
     {
-      return View(_db.Courses.ToList()); // this is 2 lines in the repo - possible issues?
+      var model = _db.Courses;
+      if (!string.IsNullOrEmpty(courseName))
+      {
+        var searched = model.AsQueryable().Where(course => course.CourseName.Contains(courseName)).ToList();
+        if (searched.Count == 0)
+        {
+          ViewBag.NoResult = "There are no courses that match your search results. Here is our full list of courses:";
+          return View(model.OrderBy(course => course.CourseName).ToList());
+        }
+        else
+        {
+          return View(searched.OrderBy(course => course.CourseName).ToList());
+        }
+      }
+      return View(model.OrderBy(course => course.CourseName).ToList());
     }
 
     public ActionResult Create()
@@ -22,6 +37,7 @@ namespace Registrar.Controllers
       return View();
     }
 
+    [HttpPost]
     public ActionResult Create(Course course)
     {
       _db.Courses.Add(course);
@@ -35,6 +51,32 @@ namespace Registrar.Controllers
         .ThenInclude(join => join.Student)
         .FirstOrDefault(course => course.CourseId == id);
         return View(thisCourse);
-    } // next step is to create the Details view
+    }
+
+    public ActionResult Edit(int id){
+      var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+      return View(thisCourse);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Course course)
+    {
+      _db.Entry(course).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+    public ActionResult Delete(int id)
+    {
+      var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+      return View(thisCourse);
+    }
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+      _db.Courses.Remove(thisCourse);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

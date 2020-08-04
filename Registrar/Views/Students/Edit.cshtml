@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Registrar.Models.Student
+
+<h4>Edit @Html.DisplayFor(model => model.StudentName)'s Courses</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.StudentId)
+
+  @Html.LabelFor(model => model.StudentName)
+  @Html.EditorFor(model => model.StudentName)
+
+  @Html.LabelFor(model => model.DateOfEnrollment)
+  @Html.EditorFor(model => model.DateOfEnrollment, new { @type="date" })
+
+  @Html.Label("Select Course")
+  @Html.DropDownList("CourseId")
+
+  <input type="submit" class="btn btn-default" value="Save Changes" />
+}
+
+<p>@Html.ActionLink("Back to Student List", "Index")</p>

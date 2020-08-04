@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Registrar.Models.Course
+
+<h2>Delete this course?</h2>
+<h3>@Html.DisplayFor(model => model.CourseName)</h3>
+
+@using (Html.BeginForm())
+{
+  <input type="submit" class="btn btn-default" value="Delete" />
+}
+
+<p>@Html.ActionLink("Back to Courses", "Index")</p>

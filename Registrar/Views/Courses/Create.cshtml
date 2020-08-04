@@ -8,12 +8,12 @@
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.CourseName)
-  @Html.TextBoxFor(model => model.CourseName)
+  @Html.TextBoxFor(model => model.CourseName, new { @class="form-control", required="required" })
 
   @Html.LabelFor(model => model.CourseNumber)
-  @Html.TextBoxFor(model => model.CourseNumber)
+  @Html.TextBoxFor(model => model.CourseNumber, new { @class="form-control", required="required" })
 
-  <input type="submit" value="Add a Course">
+  <input type="submit" class="btn btn-default" value="Add a Course" />
 }
 
 <p>@Html.ActionLink("Show a list of Courses", "Index")</p>
